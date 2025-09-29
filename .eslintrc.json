@@ -8,14 +8,78 @@
   },
   "extends": [
     "next/core-web-vitals",
+    "eslint:recommended",
     "airbnb",
     "airbnb-typescript",
+    "plugin:@typescript-eslint/recommended", // ts 권장
+    "plugin:prettier/recommended", // eslint의 포매팅을 prettier로 사용.
     "prettier"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
   },
+  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
-    "react/react-in-jsx-scope": "off"
-  }
+    "prettier/prettier": "error",
+    // Prettier 규칙을 ESLint 에러로 처리
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    // 사용되지 않은 변수가 있을 경우 에러를 발생
+    "@next/next/no-html-link-for-pages": "off",
+    // <a> 태그 대신 Link 컴포넌트를 사용하도록 강제하는 규칙을 비활성화
+    "react/jsx-props-no-spreading": "off",
+    // props를 스프레드 연산자로 넘기는 것을 허용
+    "react-hooks/rules-of-hooks": "error",
+    // Hooks의 사용 규칙을 강제
+    "react-hooks/exhaustive-deps": "warn",
+    // Hooks의 의존성 배열이 완전하지 않을 때 경고를 표시
+    "react/require-default-props": "off",
+    // React 컴포넌트에서 default props를 강제하는 규칙을 비활성화
+    "import/prefer-default-export": "off",
+    // 모듈에서 하나의 이름이 지정된 export만 있을 때, 기본 export를 사용하도록 하는 규칙을 비활성화
+    "no-console": "off",
+    // console.log, console.warn, console.error 허용
+    // "namedComponents": "arrow-function", // 이름 있는 컴포넌트는 화살표 함수 허용
+    // "unnamedComponents": "arrow-function", // 익명 컴포넌트도 화살표 함수 허용
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "some": ["nesting", "id"] // 규칙이 하나 이상 만족되어야 함을 의미. nesting과 id 중 하나만 만족하면 됨
+      }
+    ],
+    "@typescript-eslint/lines-between-class-members": "off",
+    "@typescript-eslint/no-throw-literal": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    // import 구문에서 파일 확장자를 생략
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+          // 특정 패턴을 따르는 import 구문을 특정 그룹 내에서 우선 배치하는 규칙
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  },
+  "ignorePatterns": ["postcss.config.mjs", "next.config.mjs"] // 이 파일을 ESLint에서 무시하도록 설정
 }
